@@ -18,6 +18,7 @@ java_test(
   labels = ['secure-config'],
   deps = [
     ':secure-config__plugin',
+    '//gerrit-plugin-api:lib',
     '//gerrit-acceptance-framework:lib',
   ],
 )
