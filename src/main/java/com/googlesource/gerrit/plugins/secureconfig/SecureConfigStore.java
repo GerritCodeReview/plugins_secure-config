@@ -14,9 +14,10 @@
 
 package com.googlesource.gerrit.plugins.secureconfig;
 
+import com.google.common.collect.FluentIterable;
 import com.google.gerrit.common.FileUtil;
-import com.google.gerrit.server.securestore.SecureStore;
 import com.google.gerrit.server.config.SitePaths;
+import com.google.gerrit.server.securestore.SecureStore;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -38,10 +39,12 @@ public class SecureConfigStore extends SecureStore {
   private final FileBasedConfig sec;
   private final Map<String, FileBasedConfig> pluginSec;
   private final SitePaths site;
+  private final Codec codec;
 
   @Inject
-  SecureConfigStore(SitePaths site) {
+  SecureConfigStore(SitePaths site, Codec codec) {
     this.site = site;
+    this.codec = codec;
     sec = new FileBasedConfig(site.secure_config.toFile(), FS.DETECTED);
     try {
       sec.load();
@@ -53,12 +56,15 @@ public class SecureConfigStore extends SecureStore {
 
   @Override
   public String[] getList(String section, String subsection, String name) {
-    return sec.getStringList(section, subsection, name);
+    return FluentIterable
+        .from(sec.getStringList(section, subsection, name))
+        .transform(codec::decode)
+        .toArray(String.class);
   }
 
   @Override
-  public synchronized String[] getListForPlugin(String pluginName, String section,
-    String subsection, String name) {
+  public synchronized String[] getListForPlugin(String pluginName,
+      String section, String subsection, String name) {
     FileBasedConfig cfg = null;
     if (pluginSec.containsKey(pluginName)) {
       cfg = pluginSec.get(pluginName);
@@ -75,14 +81,22 @@ public class SecureConfigStore extends SecureStore {
         }
       }
     }
-    return cfg != null ? cfg.getStringList(section, subsection, name) : null;
+    return cfg != null ?
+        FluentIterable
+        .from(cfg.getStringList(section, subsection, name))
+        .transform(codec::decode)
+        .toArray(String.class) :
+          null;
   }
 
   @Override
   public void setList(String section, String subsection, String name,
       List<String> values) {
     if (values != null) {
-      sec.setStringList(section, subsection, name, values);
+      sec.setStringList(section, subsection, name,
+          FluentIterable.from(values)
+          .transform(codec::encode)
+          .toList());
     } else {
       sec.unset(section, subsection, name);
     }
@@ -119,7 +133,7 @@ public class SecureConfigStore extends SecureStore {
     }
   }
 
-  private static void saveSecure(final FileBasedConfig sec) throws IOException {
+  private void saveSecure(final FileBasedConfig sec) throws IOException {
     if (FileUtil.modified(sec)) {
       final byte[] out = Constants.encode(sec.toText());
       final File path = sec.getFile();

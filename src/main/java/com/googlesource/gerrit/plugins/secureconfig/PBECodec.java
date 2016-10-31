@@ -1,0 +1,108 @@
+// Copyright (C) 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package com.googlesource.gerrit.plugins.secureconfig;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import org.bouncycastle.util.encoders.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.Security;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
+
+@Singleton
+public class PBECodec implements Codec {
+  private static final Logger log = LoggerFactory.getLogger(PBECodec.class);
+  byte[] salt = new byte[] {0x7d, 0x60, 0x43, 0x5f, 0x02, (byte) 0xe9,
+      (byte) 0xe0, (byte) 0xae};
+  int iterationCount = 2048;
+  private SecureConfigSettings config;
+
+  @Inject
+  public PBECodec(SecureConfigSettings config) {
+    Security
+        .addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+    this.config = config;
+  }
+
+  @Override
+  public String encode(String s) {
+    try {
+      Key sKey = generateKey();
+      Cipher encoder = getCipher();
+
+      encoder.init(Cipher.ENCRYPT_MODE, sKey, getCipherParameterSpec());
+      return new String(Base64.encode(encoder.doFinal(s.getBytes())));
+
+    } catch (NoSuchAlgorithmException | NoSuchProviderException
+        | NoSuchPaddingException | InvalidKeyException
+        | InvalidAlgorithmParameterException | IllegalBlockSizeException
+        | BadPaddingException | InvalidKeySpecException e) {
+      log.error("encode() failed", e);
+      throw new IllegalArgumentException(e);
+    }
+  }
+
+  @Override
+  public String decode(String s) {
+    try {
+      Cipher encoder = getCipher();
+      Key sKey = generateKey();
+
+      encoder.init(Cipher.DECRYPT_MODE, sKey, getCipherParameterSpec());
+      return new String(encoder.doFinal(Base64.decode(s)));
+
+    } catch (NoSuchAlgorithmException | NoSuchProviderException
+        | NoSuchPaddingException | InvalidKeyException
+        | InvalidAlgorithmParameterException | IllegalBlockSizeException
+        | BadPaddingException | InvalidKeySpecException e) {
+      log.error("decode() failed", e);
+      throw new IllegalArgumentException(e);
+    }
+  }
+
+  private PBEParameterSpec getCipherParameterSpec() {
+    return new PBEParameterSpec(salt, iterationCount);
+  }
+
+  private Cipher getCipher() throws NoSuchAlgorithmException,
+      NoSuchProviderException, NoSuchPaddingException {
+    Cipher encoder = Cipher.getInstance(config.getCipher(), "BC");
+    return encoder;
+  }
+
+  private Key generateKey() throws NoSuchAlgorithmException,
+      NoSuchProviderException, InvalidKeySpecException {
+    PBEKeySpec pbeSpec = new PBEKeySpec(config.getPassword());
+    SecretKeyFactory keyFact =
+        SecretKeyFactory.getInstance(config.getCipher(), "BC");
+    return keyFact.generateSecret(pbeSpec);
+  }
+}
