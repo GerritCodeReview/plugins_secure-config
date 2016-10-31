@@ -1,4 +1,4 @@
-include_defs('//lib/maven.defs')
+include_defs('//bucklets/gerrit_plugin.bucklet')
 
 gerrit_plugin(
   name = 'secure-config',
@@ -16,8 +16,7 @@ java_test(
   name = 'secure-config_tests',
   srcs = glob(['src/test/java/**/*.java']),
   labels = ['secure-config'],
-  deps = [
+  deps = GERRIT_PLUGIN_API + GERRIT_TESTS + [
     ':secure-config__plugin',
-    '//gerrit-acceptance-framework:lib',
   ],
 )
