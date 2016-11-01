@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c61e92f3_da6ce57e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/PBECodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2016-11-01T06:24:35Z",
+      "side": 1,
+      "message": "BouncyCastle is now a mandatory dependency in Gerrit. But true, I can easily then just use the Java8 one :-)",
+      "parentUuid": "4649c200_de6ce57e",
+      "revId": "bae4a8e0f60ec3a1e94467e3a678831e697442c0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4649c200_fe71a151",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/PBECodec.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4649c200_be7b1930",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/PBECodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2016-11-01T06:24:35Z",
+      "side": 1,
+      "message": "I can just make it configurable. Typically the standard Java JCE does not include a lot of algorithms and BC provider is mostly needed.",
+      "parentUuid": "4649c200_fe71a151",
+      "revId": "bae4a8e0f60ec3a1e94467e3a678831e697442c0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61052d1_ea932735",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/SecureConfigStore.java",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2016-11-01T06:03:26Z",
       "side": 1,
       "message": "We can probably do this without Guava in Java 8.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 31
+      },
+      "revId": "bae4a8e0f60ec3a1e94467e3a678831e697442c0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c61e92f3_fa71a951",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/SecureConfigStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2016-11-01T06:24:35Z",
+      "side": 1,
+      "message": "True ... but a bit more ugly but will give it a go and see how it looks like.",
+      "parentUuid": "c61052d1_ea932735",
       "range": {
         "startLine": 59,
         "startChar": 4,
