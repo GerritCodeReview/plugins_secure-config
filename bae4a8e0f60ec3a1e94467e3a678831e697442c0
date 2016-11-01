@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4649c200_de6ce57e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/PBECodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1011323
+      },
+      "writtenOn": "2016-11-01T06:00:36Z",
+      "side": 1,
+      "message": "bouncy castle is not declared dependency. Since Java 8 you can use this: [1].\n\n* [1] https://docs.oracle.com/javase/8/docs/api/java/util/Base64.html",
+      "revId": "bae4a8e0f60ec3a1e94467e3a678831e697442c0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4649c200_fe71a151",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/PBECodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1011323
+      },
+      "writtenOn": "2016-11-01T06:00:36Z",
+      "side": 1,
+      "message": "Is this required dependency? Mention it in the commit message? Can\u0027t we provide (optionally) a pure JDK implementation without external dependencies?",
+      "revId": "bae4a8e0f60ec3a1e94467e3a678831e697442c0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
