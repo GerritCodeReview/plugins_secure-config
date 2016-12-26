@@ -8,6 +8,9 @@ gerrit_plugin(
     'Implementation-Title: Secure-Config plugin',
     'Implementation-URL: https://gerrit-review.googlesource.com/#/admin/projects/plugins/secure-config',
   ],
+  provided_deps = [
+    '//lib/commons:codec',
+  ],
   deps = [
   ],
 )

@@ -14,6 +14,7 @@
 
 package com.googlesource.gerrit.plugins.secureconfig;
 
+import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.gerrit.common.FileUtil;
 import com.google.gerrit.server.config.SitePaths;
@@ -34,7 +35,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Singleton
 public class SecureConfigStore extends SecureStore {
@@ -56,11 +56,25 @@ public class SecureConfigStore extends SecureStore {
     this.pluginSec = new HashMap<>();
   }
 
+  Function<String, String> decode = new Function<String, String>() {
+    @Override
+    public String apply(String input) {
+      return codec.decode(input);
+    }
+  };
+
+  Function<String, String> encode = new Function<String, String>() {
+    @Override
+    public String apply(String input) {
+      return codec.encode(input);
+    }
+  };
+
   @Override
   public String[] getList(String section, String subsection, String name) {
-    return Arrays.stream(sec.getStringList(section, subsection, name))
-        .map(codec::decode)
-        .toArray(String[]::new);
+    return FluentIterable
+        .from(Arrays.asList(sec.getStringList(section, subsection, name)))
+        .transform(decode).toArray(String.class);
   }
 
   @Override
@@ -82,9 +96,10 @@ public class SecureConfigStore extends SecureStore {
         }
       }
     }
+
     return cfg != null ? FluentIterable
-        .from(cfg.getStringList(section, subsection, name))
-        .transform(codec::decode).toArray(String.class) : null;
+        .from(Arrays.asList(cfg.getStringList(section, subsection, name)))
+        .transform(decode).toArray(String.class) : null;
   }
 
   @Override
@@ -92,9 +107,7 @@ public class SecureConfigStore extends SecureStore {
       List<String> values) {
     if (values != null) {
       sec.setStringList(section, subsection, name,
-          values.stream()
-          .map(codec::encode)
-          .collect(Collectors.toList()));
+          FluentIterable.from(values).transform(encode).toList());
     } else {
       sec.unset(section, subsection, name);
     }
