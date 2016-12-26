@@ -42,6 +42,19 @@ Example:
 
 ## How to run
 
+This plugin will decode values in secure.config, it will fail if there
+is an existing secure.config which contains values that are not encrypted.
+If the values in the current secure.config are not encrypted you will need
+to either clear out secure.config or back it up by moving it to another file
+before running this plugin.
+
+Example:
+```
+
+   $ mv $GERRIT_SITE/etc/secure.config $GERRIT_SITE/etc/secure.config.bakup
+
+```
+
 Gerrit secure.config properties need to be generated and managed using the
 Gerrit init wizard. All the passwords entered at init will be stored as
 encrypted values and then decrypted *on-the-fly* when needed at runtime.
