@@ -17,6 +17,7 @@ package com.googlesource.gerrit.plugins.secureconfig;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,6 @@ import java.security.NoSuchProviderException;
 import java.security.Provider;
 import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -35,7 +35,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 @Singleton
-public class PBECodec implements Codec {
+public class PBECodec extends Codec {
   private static final Logger log = LoggerFactory.getLogger(PBECodec.class);
   byte[] salt = new byte[] {0x7d, 0x60, 0x43, 0x5f, 0x02, (byte) 0xe9,
       (byte) 0xe0, (byte) 0xae};
@@ -57,7 +57,7 @@ public class PBECodec implements Codec {
       Cipher encoder = getCipher();
 
       encoder.init(Cipher.ENCRYPT_MODE, sKey, getCipherParameterSpec());
-      return new String(Base64.getEncoder().encodeToString(
+      return new String(Base64.encodeBase64(
           encoder.doFinal(s.getBytes(config.getEncoding()))));
 
     } catch (Exception e) {
@@ -73,7 +73,7 @@ public class PBECodec implements Codec {
       Key sKey = generateKey();
 
       encoder.init(Cipher.DECRYPT_MODE, sKey, getCipherParameterSpec());
-      return new String(encoder.doFinal(Base64.getDecoder().decode(s)),
+      return new String(encoder.doFinal(Base64.decodeBase64(s)),
           config.getEncoding());
 
     } catch (Exception e) {

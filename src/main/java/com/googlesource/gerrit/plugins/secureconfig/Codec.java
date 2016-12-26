@@ -14,7 +14,23 @@
 
 package com.googlesource.gerrit.plugins.secureconfig;
 
-public interface Codec {
+import com.google.common.base.Function;
+
+public abstract class Codec {
+
+  public Function<String, String> decodeFun = new Function<String, String>() {
+    @Override
+    public String apply(String input) {
+      return decode(input);
+    }
+  };
+
+  public Function<String, String> encodeFun = new Function<String, String>() {
+    @Override
+    public String apply(String input) {
+      return encode(input);
+    }
+  };
 
   public abstract String encode(String plain);
 

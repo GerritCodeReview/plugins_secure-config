@@ -18,6 +18,8 @@ import com.google.gerrit.server.config.SitePaths;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import org.apache.commons.codec.binary.Base64;
+
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -27,7 +29,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
 
 @Singleton
 public class SecureConfigSettings {
@@ -84,7 +85,7 @@ public class SecureConfigSettings {
           new byte[gerritConfig.getInt(SECURE_CONFIG, PASSWORD_LENGTH,
               DEF_PASSWORD_LENGTH)];
       in.read(passphrase);
-      return new String(Base64.getEncoder().encode(passphrase)).toCharArray();
+      return new String(Base64.encodeBase64(passphrase)).toCharArray();
     }
   }
 }
