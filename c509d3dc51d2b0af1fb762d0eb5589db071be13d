@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1ba32a_3b2d3fa9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/SecureConfigStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2016-12-28T15:08:32Z",
+      "side": 1,
+      "message": "Those should stay in the PBECodec IMHO, as public static final fields.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 4
+      },
+      "revId": "c509d3dc51d2b0af1fb762d0eb5589db071be13d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
