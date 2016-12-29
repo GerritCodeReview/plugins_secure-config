@@ -34,7 +34,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Singleton
 public class SecureConfigStore extends SecureStore {
@@ -58,9 +57,9 @@ public class SecureConfigStore extends SecureStore {
 
   @Override
   public String[] getList(String section, String subsection, String name) {
-    return Arrays.stream(sec.getStringList(section, subsection, name))
-        .map(codec::decode)
-        .toArray(String[]::new);
+    return FluentIterable
+        .from(Arrays.asList(sec.getStringList(section, subsection, name)))
+        .transform(codec.decodeFun).toArray(String.class);
   }
 
   @Override
@@ -82,9 +81,11 @@ public class SecureConfigStore extends SecureStore {
         }
       }
     }
+
     return cfg != null ? FluentIterable
-        .from(cfg.getStringList(section, subsection, name))
-        .transform(codec::decode).toArray(String.class) : null;
+        .from(Arrays.asList(cfg.getStringList(section, subsection, name)))
+        .transform(codec.decodeFun)
+        .toArray(String.class) : null;
   }
 
   @Override
@@ -92,9 +93,9 @@ public class SecureConfigStore extends SecureStore {
       List<String> values) {
     if (values != null) {
       sec.setStringList(section, subsection, name,
-          values.stream()
-          .map(codec::encode)
-          .collect(Collectors.toList()));
+          FluentIterable.from(values)
+          .transform(codec.encodeFun)
+          .toList());
     } else {
       sec.unset(section, subsection, name);
     }
