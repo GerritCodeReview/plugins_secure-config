@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "178e1eb3_5dbe5b61",
+        "filename": "src/main/java/com/google/gerrit/pgm/Passwd.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1012623
+      },
+      "writtenOn": "2017-01-10T06:51:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this variable.   Is this something like `user` or `username`?  Also is the idea to pass in a set of these vars at one time or can you pass in multiple sets of these?  For example does this support setting the password for database and its-jira in one execution?",
+      "revId": "2123e375edac4adfe2eebca989d59a9c8e029cc7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5756d6ee_8ff41568",
+        "filename": "src/main/java/com/google/gerrit/pgm/Passwd.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1012623
+      },
+      "writtenOn": "2017-01-10T06:51:25Z",
+      "side": 1,
+      "message": "if i understand it right this is the username?  maybe a better usage description?  Also I think user isn\u0027t always required.  Jenkins for instance does not require a username when you give it authenticate with an API token.",
+      "revId": "2123e375edac4adfe2eebca989d59a9c8e029cc7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
