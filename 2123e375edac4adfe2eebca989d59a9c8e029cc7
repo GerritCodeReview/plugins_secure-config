@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7442a3c_2ca25381",
+        "filename": "src/main/java/com/google/gerrit/pgm/Passwd.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2017-01-10T10:16:16Z",
+      "side": 1,
+      "message": "Actually it is not needed to set the username with this utility as it is not encrypted at all.",
+      "parentUuid": "178e1eb3_5dbe5b61",
+      "revId": "2123e375edac4adfe2eebca989d59a9c8e029cc7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5756d6ee_8ff41568",
         "filename": "src/main/java/com/google/gerrit/pgm/Passwd.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-01-10T06:51:25Z",
       "side": 1,
       "message": "if i understand it right this is the username?  maybe a better usage description?  Also I think user isn\u0027t always required.  Jenkins for instance does not require a username when you give it authenticate with an API token.",
+      "revId": "2123e375edac4adfe2eebca989d59a9c8e029cc7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d741e62c_4b9f8538",
+        "filename": "src/main/java/com/google/gerrit/pgm/Passwd.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2017-01-10T10:16:16Z",
+      "side": 1,
+      "message": "Not needed anymore",
+      "parentUuid": "5756d6ee_8ff41568",
       "revId": "2123e375edac4adfe2eebca989d59a9c8e029cc7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
