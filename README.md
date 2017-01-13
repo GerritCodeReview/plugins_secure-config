@@ -56,24 +56,22 @@ Example:
 ```
 
 Gerrit secure.config properties need to be generated and managed using the
-Gerrit init wizard. All the passwords entered at init will be stored as
+Gerrit passwd command. All the passwords entered will be stored as
 encrypted values and then decrypted *on-the-fly* when needed at runtime.
 
 Example:
+```
+
+   $ java -jar $GERRIT_SITE/bin/gerrit.war passwd -d $GERRIT_SITE auth.password my_db_password
+   $ cat $GERRIT_SITE/etc/secure.config
+     [database]
+         password = 3JGeSJg7Jfg3EChLEcCXzg==
 
 ```
-   $ cd $GERRIT_SITE && java -jar bin/gerrit.war init
-   Using secure store: com.googlesource.gerrit.plugins.secureconfig.SecureConfigStore
 
-   *** Gerrit Code Review 2.13.2-1146-ga89e6a3
-   [...]
-
-
-   $ cat etc/secure.config
-   [auth]
-	registerEmailPrivateKey = hfMC1Yi9NF5N3Yz7cVNUdJNPQfbb2g47RnaPElTraTh0MMB2OE+xeg==
-
-```
+*Note This plugin expects the entire contents of secure.config to be encrypted.
+If you have usernames set in secure.config you must either encrypt those values
+or move the unencrypted username parameters to the gerrit.config file.
 
 ## Customising encryption settings
 
