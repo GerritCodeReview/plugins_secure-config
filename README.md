@@ -8,11 +8,11 @@ Clone the secure-config plugin into a Gerrit source tree under the
 directory plugins/secure-config, and then run:
 
 ```
-   $ buck build plugins/secure-config
+   $ bazel build plugins/secure-config
 ```
 
 Resulting plugin jar is generated under
-/buck-out/gen/plugins/secure-config/secure-config.jar
+bazel-genfiles/plugins/secure-config/secure-config.jar
 
 ## How to install
 
@@ -22,7 +22,7 @@ directory of Gerrit installation.
 Example:
 
 ```
-   $ cp buck-out/gen/plugins/secure-config/secure-config.jar $GERRIT_SITE/lib/
+   $ cp bazel-genfiles/plugins/secure-config/secure-config.jar $GERRIT_SITE/lib/
 ```
 
 ## How to configure
