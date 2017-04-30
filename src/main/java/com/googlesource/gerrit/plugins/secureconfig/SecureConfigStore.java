@@ -42,6 +42,7 @@ public class SecureConfigStore extends SecureStore {
   private final Map<String, FileBasedConfig> pluginSec;
   private final SitePaths site;
   private final Codec codec;
+  private long secFileLastmodified;
 
   @Inject
   SecureConfigStore(SitePaths site, PBECodec codec) {
@@ -50,6 +51,7 @@ public class SecureConfigStore extends SecureStore {
     sec = new FileBasedConfig(site.secure_config.toFile(), FS.DETECTED);
     try {
       sec.load();
+      secFileLastmodified = sec.getFile().lastModified();
     } catch (IOException | ConfigInvalidException e) {
       throw new RuntimeException("Cannot load secure.config", e);
     }
@@ -121,6 +123,21 @@ public class SecureConfigStore extends SecureStore {
       }
     }
     return result;
+  }
+
+  /** @return <code>true</code> if currently loaded values are outdated */
+  public boolean isOutdated() {
+    long secFileCurrLastModified = sec.getFile().lastModified();
+    return secFileCurrLastModified > secFileLastmodified;
+  }
+
+  /** Reload the values */
+  public void reload() {
+    try {
+      sec.load();
+    } catch (IOException | ConfigInvalidException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   private void save() {
