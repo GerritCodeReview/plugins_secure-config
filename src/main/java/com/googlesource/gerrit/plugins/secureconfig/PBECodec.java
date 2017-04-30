@@ -88,6 +88,7 @@ public class PBECodec implements Codec {
 
   private Cipher getCipher() throws NoSuchAlgorithmException,
       NoSuchProviderException, NoSuchPaddingException {
+    @SuppressWarnings("InsecureCipherMode")
     Cipher encoder =
         Cipher.getInstance(config.getCipher(), config.getJCEProvider());
     return encoder;
