@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcc3981d_3cc574ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1168718
+      },
+      "writtenOn": "2023-12-26T00:15:11Z",
+      "side": 1,
+      "message": "val interpolatedResult \u003d Path()\nif (path.isInterpolatable(otherPath)) {\n    path.interpolate(otherPath, .5f, interpolatedResult)\n}",
+      "revId": "897f7c60477c57c828068e2c33fd66de045e1cee",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
