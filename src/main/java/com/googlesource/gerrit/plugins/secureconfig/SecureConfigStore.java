@@ -29,6 +29,7 @@ import org.eclipse.jgit.util.FS;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,17 +44,22 @@ public class SecureConfigStore extends SecureStore {
   private final SitePaths site;
   private final Codec codec;
   private long secFileLastmodified;
+  private final Path secure_config;
+  private static final String SECURE_CONFIG_FILE = "secure.config";
+
 
   @Inject
   SecureConfigStore(SitePaths site, PBECodec codec) {
     this.site = site;
+    secure_config = site.etc_dir.resolve(SECURE_CONFIG_FILE);
+
     this.codec = codec;
-    sec = new FileBasedConfig(site.secure_config.toFile(), FS.DETECTED);
+    sec = new FileBasedConfig(secure_config.toFile(), FS.DETECTED);
     try {
       sec.load();
       secFileLastmodified = sec.getFile().lastModified();
     } catch (IOException | ConfigInvalidException e) {
-      throw new RuntimeException("Cannot load secure.config", e);
+      throw new RuntimeException("Cannot load " + SECURE_CONFIG_FILE, e);
     }
     this.pluginSec = new HashMap<>();
   }
@@ -72,7 +78,7 @@ public class SecureConfigStore extends SecureStore {
     if (pluginSec.containsKey(pluginName)) {
       cfg = pluginSec.get(pluginName);
     } else {
-      String filename = pluginName + ".secure.config";
+      String filename = pluginName + "." + SECURE_CONFIG_FILE;
       File pluginConfigFile = site.etc_dir.resolve(filename).toFile();
       if (pluginConfigFile.exists()) {
         cfg = new FileBasedConfig(pluginConfigFile, FS.DETECTED);
@@ -144,7 +150,7 @@ public class SecureConfigStore extends SecureStore {
     try {
       saveSecure(sec);
     } catch (IOException e) {
-      throw new RuntimeException("Cannot save secure.config", e);
+      throw new RuntimeException("Cannot save " + SECURE_CONFIG_FILE, e);
     }
   }
 
