@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "023833df_8bb5e11b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2024-02-06T12:34:55Z",
+      "side": 1,
+      "message": "I think that `Release-Notes` footer only applies to the Gerrit project and is not used in other projects, even when they are _default plugins_ like the `secure-config`. Please, someone correct me if I\u0027m wrong.",
+      "revId": "fe030eba9c930a2f955a6d3d34fcca332cf7c2ed",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4ec6e11_52b1110f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/secureconfig/SecureConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2024-02-06T12:34:55Z",
+      "side": 1,
+      "message": "nit: usually `static` members are coming first in the class body, and are also divided by empty line from non-static members",
+      "revId": "fe030eba9c930a2f955a6d3d34fcca332cf7c2ed",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
