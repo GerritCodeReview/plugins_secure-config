@@ -16,6 +16,24 @@
       "message": "Remove empty line, otherwise the `Bug: Issue 323087130` won\u0027t be part of the footer",
       "revId": "8ac17b14ff44491d7bd685d3c6958290c14c4362",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7044d5d3_e6075875",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1090261
+      },
+      "writtenOn": "2024-02-27T09:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e19ddbf_59f34037",
+      "revId": "8ac17b14ff44491d7bd685d3c6958290c14c4362",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
